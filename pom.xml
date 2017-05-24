@@ -6,17 +6,17 @@
 
     <groupId>ru.xpoft.vaadin</groupId>
     <artifactId>spring-vaadin-integration</artifactId>
-    <version>3.2</version>
+    <version>3.3-kirona</version>
     <name>SpringVaadinIntegration</name>
     <packaging>bundle</packaging>
     <url>https://github.com/xpoft/spring-vaadin</url>
 
     <properties>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.2.0.RELEASE</spring.version>
-        <vaadin.version>7.6.0</vaadin.version>
+        <spring.version>4.0.9.RELEASE</spring.version>
+        <vaadin.version>8.0.6</vaadin.version>
 
         <!-- ZIP Manifest fields -->
         <Implementation-Version>${project.version}</Implementation-Version>
@@ -28,15 +28,15 @@
     </properties>
 
     <scm>
-        <url>git://github.com/xpoft/spring-vaadin.git</url>
-        <connection>scm:git:git://github.com/xpoft/spring-vaadin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:/xpoft/spring-vaadin.git</developerConnection>
+        <url>git://github.com/kironapublic/spring-vaadin.git</url>
+        <connection>scm:git:git://github.com/kironapublic/spring-vaadin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:/kironapublic/spring-vaadin.git</developerConnection>
         <tag>spring-vaadin-integration</tag>
     </scm>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/xpoft/spring-vaadin/issues</url>
+        <url>https://github.com/kironapublic/spring-vaadin/issues</url>
     </issueManagement>
 
     <dependencies>
@@ -45,24 +45,25 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.7</version>
-        </dependency>
-
-        <!-- Web API -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
             <scope>provided</scope>
         </dependency>
 
+        <!-- Web API -->
+      	<dependency>
+      		<groupId>javax.servlet</groupId>
+      		<artifactId>javax.servlet-api</artifactId>
+      		<version>3.1.0</version>
+      		<scope>provided</scope>
+      	</dependency>    
+
         <!-- Portlet API -->
-        <dependency>
-            <groupId>javax.portlet</groupId>
-            <artifactId>portlet-api</artifactId>
-            <version>2.0</version>
-            <scope>compile</scope>
-            <optional>true</optional>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>javax.portlet</groupId> -->
+<!--             <artifactId>portlet-api</artifactId> -->
+<!--             <version>2.0</version> -->
+<!--             <scope>provided</scope> -->
+<!--             <optional>true</optional> -->
+<!--         </dependency> -->
 
         <!-- Spring -->
         <dependency>
@@ -73,13 +74,13 @@
         </dependency>
 
         <!-- Spring Portlet -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc-portlet</artifactId>
-            <version>${spring.version}</version>
-            <scope>compile</scope>
-            <optional>true</optional>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>org.springframework</groupId> -->
+<!--             <artifactId>spring-webmvc-portlet</artifactId> -->
+<!--             <version>${spring.version}</version> -->
+<!--             <scope>compile</scope> -->
+<!--             <optional>true</optional> -->
+<!--         </dependency> -->
 
         <!-- Vaadin -->
         <dependency>
@@ -90,25 +91,57 @@
         </dependency>
 
         <!-- Apache Shiro -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
-            <version>1.2.3</version>
-            <scope>compile</scope>
-            <optional>true</optional>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>org.apache.shiro</groupId> -->
+<!--             <artifactId>shiro-core</artifactId> -->
+<!--             <version>1.2.3</version> -->
+<!--             <scope>compile</scope> -->
+<!--             <optional>true</optional> -->
+<!--         </dependency> -->
 
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>repo</id>
-            <url>file:///${basedir}/repository</url>
-        </repository>
-    </distributionManagement>
+<!--     <distributionManagement> -->
+<!--         <repository> -->
+<!--             <id>repo</id> -->
+<!--             <url>file:///${basedir}/repository</url> -->
+<!--         </repository> -->
+<!--     </distributionManagement> -->
 
     <build>
         <plugins>
+<!--  KIRONA BUILD STEPS -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-jars</id>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/lib</outputDirectory>
+              <excludeTypes>pom</excludeTypes>
+              <includeScope>test</includeScope>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-source</id>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/lib</outputDirectory>
+              <excludeTypes>pom</excludeTypes>
+              <includeScope>runtime</includeScope>
+              <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>              <classifier>sources</classifier>              
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+<!-- END KIRONA BUILD STEPS -->
+        
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
@@ -199,6 +232,41 @@
                 </executions>
             </plugin>
         </plugins>
+        <pluginManagement>
+        	<plugins>
+        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        		<plugin>
+        			<groupId>org.eclipse.m2e</groupId>
+        			<artifactId>lifecycle-mapping</artifactId>
+        			<version>1.0.0</version>
+        			<configuration>
+        				<lifecycleMappingMetadata>
+        					<pluginExecutions>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>
+        									org.apache.felix
+        								</groupId>
+        								<artifactId>
+        									maven-bundle-plugin
+        								</artifactId>
+        								<versionRange>
+        									[2.4.0,)
+        								</versionRange>
+        								<goals>
+        									<goal>manifest</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<ignore></ignore>
+        							</action>
+        						</pluginExecution>
+        					</pluginExecutions>
+        				</lifecycleMappingMetadata>
+        			</configuration>
+        		</plugin>
+        	</plugins>
+        </pluginManagement>
     </build>
 
 </project>
