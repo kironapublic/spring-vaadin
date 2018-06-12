@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class DiscoveryNavigator extends Navigator implements ViewCacheContainer
 {
-    protected class ViewCache implements Serializable
+    protected static class ViewCache implements Serializable
     {
         private final String name;
         private final String beanName;
