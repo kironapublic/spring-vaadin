@@ -6,7 +6,7 @@
 
     <groupId>ru.xpoft.vaadin</groupId>
     <artifactId>spring-vaadin-integration</artifactId>
-    <version>3.3-kirona</version>
+    <version>3.4-kirona</version>
     <name>SpringVaadinIntegration</name>
     <packaging>bundle</packaging>
     <url>https://github.com/xpoft/spring-vaadin</url>
